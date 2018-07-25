@@ -182,7 +182,7 @@ else
       #there was an error creating the image; remove the temporary directory
       # chdir("$ProcessLatex_Path");        # change back to the Process_LaTeX dir
       #system("rmdir \"$PID_Path\" /q /s");     # remove temp dir
-      system("rmdir \"$Local_Path\" /q /s");   # remove temp dir
+        system("rm -r \"$Local_Path\"");   # remove temp dir
     }
   }
 }
@@ -241,7 +241,7 @@ sub Create_Image
   # we pass an absolute path to the file template.tex as an environment
   # variable so that LaTeX looks in /tmp/$pid for fontsize.tex and
   # equation.tex.
-  my $latexCall = "latex \"\\def\\path{$PID_Path} \\input{$PID_Path/template.tex} \\output{$PID_Path}\" -output-directory=\"$PID_Path\"";
+  my $latexCall = "latex -output-directory=\"$PID_Path\" \"\\def\\path{$PID_Path} \\input{$PID_Path/template.tex} \\output{$PID_Path}\"";
   $temp = system($latexCall);    
 
   if ($temp >> 8) #the return value of a system call represents the exit status
